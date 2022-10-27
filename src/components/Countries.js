@@ -7,6 +7,7 @@ const Countries = () => {
   const [data, setData] = useState([]);
   const [RangeValue, setRangeValue] = useState(36);
   const radio = ["Afrique", "America", "Asia", "Europ", "Oceania"];
+  const [selectedRadio, setSelectedRadio] = useState("");
   // const [hello, setHello] = useState("hello friends");
   useEffect(() => {
     // .get("link") aller chercher then. apres tu me donne un resultat "res" et tu l'affiche dans le console.log
@@ -25,15 +26,26 @@ const Countries = () => {
           defaultValue={RangeValue}
           onChange={(e) => setRangeValue(e.target.value)}
         />
-        {radio.map(continent) => }
-        <input type="radio" id="afrique" />
-        <label htmlFor="afrique"></label>
+        {radio.map((continent) => (
+          <li>
+            <input
+              type="radio"
+              id="afrique"
+              name="continentRadio"
+              onChange={(e) => setSelectedRadio(e.target.id)}
+            />
+            <label htmlFor="{continent}">{continent}</label>
+          </li>
+        ))}
       </ul>
       {/* <p>{hello}</p> */}
       <ul>
-        {data.slice(0, RangeValue).map((country, index) => (
-          <Card key={index} country={country} />
-        ))}
+        {data
+          .filter((country) => country.continents[0].includes(selectedRadio))
+          .slice(0, RangeValue)
+          .map((country, index) => (
+            <Card key={index} country={country} />
+          ))}
       </ul>
     </div>
   );
